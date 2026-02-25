@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilih Materi</title>
+
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    margin: 20px auto;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    max-width: 600px;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #2c3e50;
+}
+</style>
+</head>
+
+<body>
+
+    <h1>EKOLOGI DAN PELESTARIAN LINGKUNGAN</h1>
+    <h2 style="text-align:center;">Pilih Materi</h2>
+
+    <div class="card">
+        <h3>A. Pengaruh Lingkungan terhadap Organisme</h3>
+        <ol>
+            <li>Pengaruh Lingkungan terhadap Kehidupan Organisme</li>
+            <li>Pengertian Lingkungan</li>
+            <li>Komponen Lingkungan Abiotik</li>
+            <li>Komponen Lingkungan Biotik</li>
+            <li>Kuis</li>
+        </ol>
+        <button onclick="window.location.href='materiA.html'">
+        Mulai Belajar
+    </button>
+    </div>
+
+    <div class="card">
+        <h3>B. Interaksi Antar Komponen dalam Ekosistem</h3>
+        <ol>
+            <li>Pengertian Ekosistem dan Ekologi</li>
+            <li>Tingkatan Organisasi Kehidupan</li>
+            <li>Habitat dan Mikrohabitat</li>
+            <li>Aliran Energi dalam Ekosistem</li>
+            <li>Daur Biogeokimia</li>
+            <li>Jenis Interaksi dalam Ekosistem</li>
+            <li>Kuis</li>
+        </ol>
+        <button onclick="window.location.href='materiB.html'">
+        Mulai Belajar
+    </button>
+    </div>
+
+    <div class="card">
+        <h3>C. Pengaruh Aktivitas Manusia terhadap Ekosistem</h3>
+        <ol>
+            <li>Pertanian dan Produksi Pangan</li>
+            <li>Pengertian Lingkungan</li>
+            <li>Polusi</li>
+            <li>Perubahan Iklim</li>
+            <li>Kuis</li>
+        </ol>
+        <button onclick="window.location.href='materiC.html'">
+        Mulai Belajar
+    </button>
+    </div>
+
+    <div class="card">
+        <h3>D. Konservasi dan Pelestarian Lingkungan</h3>
+        <ol>
+            <li>Manfaat Konservasi</li>
+            <li>Metode Konservasi</li>
+            <li>Kuis</li>
+        </ol>
+        <button onclick="window.location.href='materiD.html'">
+        Mulai Belajar
+    </button>
+    </div>
+
+    <h1><button onclick="window.location.href='index.html'">Kembali</button></h1>
+
+</div>
+
+<script>
+function masuk() {
+    document.getElementById("home").style.display = "none";
+    document.getElementById("menu").style.display = "block";
+}
+
+function kembaliHome() {
+    document.getElementById("menu").style.display = "none";
+    document.getElementById("home").style.display = "block";
+}
+</script>
+</body>
+</html>

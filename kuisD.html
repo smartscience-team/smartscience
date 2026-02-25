@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Petualangan Misi Sains</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+    text-align: center;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+@media screen and (max-width: 768px) {
+
+    body {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    h3 {
+        font-size: 16px;
+    }
+
+    button {
+        width: 100%;
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .status {
+        font-size: 14px;
+    }
+}
+
+.fade {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.benar {
+    background-color: #d4edda !important;
+    animation: flash 0.4s;
+}
+
+.salah {
+    background-color: #f8d7da !important;
+    animation: shake 0.4s;
+}
+
+@keyframes flash {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.05);}
+    100% {transform: scale(1);}
+}
+
+@keyframes shake {
+    0% {transform: translateX(0);}
+    25% {transform: translateX(-5px);}
+    50% {transform: translateX(5px);}
+    75% {transform: translateX(-5px);}
+    100% {transform: translateX(0);}
+}
+
+button {
+    margin: 8px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #3498db;
+    color: white;
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: #2c3e50;
+}
+
+.status {
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card fade" id="card">
+
+<h1>Misi D: Penyelamat Keanekaragaman Hayati</h1>
+
+<div class="status">
+❤️ Nyawa: <span id="nyawa">3</span> |
+⭐ Skor: <span id="skor">0</span>
+</div>
+
+<h2 id="level"></h2>
+<h3 id="soal"></h3>
+
+<div id="jawaban"></div>
+<br>
+<button onclick="kembali()">Kembali ke Materi</button>
+</div>
+
+<script>
+
+let nyawa = 3;
+let skor = 0;
+let nomor = 0;
+let level = 1;
+let batasLulus = 20; // minimal 2 soal benar per level
+
+let semuaLevel = {
+
+1: [
+{
+soal: "Konservasi bertujuan untuk...",
+pilihan: ["Mengeksploitasi sumber daya alam", "Melestarikan keanekaragaman hayati", "Mengurangi jumlah hewan", "Menebang hutan"],
+benar: 1
+},
+{
+soal: "Pelestarian di habitat asli disebut...",
+pilihan: ["Eks-situ", "Adaptasi", "In-situ", "Reboisasi"],
+benar: 2
+},
+{
+soal: "Kebun binatang termasuk contoh konservasi...",
+pilihan: ["Eks-situ", "In-situ", "Bioma", "Biosfer"],
+benar: 1
+}],
+2: [
+{
+soal: "Salah satu manfaat konservasi secara ekonomi adalah...",
+pilihan: ["Mengurangi hewan liar", "Menambah polusi", "Sumber pendapatan melalui ekowisata", "Menghilangkan habitat"],
+benar: 2
+},
+{
+soal: "Kepunahan spesies dapat terjadi karena...",
+pilihan: ["Pelestarian habitat", "Perburuan liar dan kerusakan habitat", "Konservasi", "Reboisasi"],
+benar: 1
+},
+{
+soal: "Konservasi in-situ lebih efektif karena...",
+pilihan: ["Lebih murah", "Menjaga interaksi alami", "Tidak butuh pengawasan", "Semua spesies bisa dipindahkan"],
+benar: 1
+}],
+3: [
+{soal: "Jika populasi kecil dan terisolasi, risiko terbesar adalah...",
+pilihan: ["Migrasi meningkat", "Variasi genetik menurun", "Habitat meluas", "Predator hilang"],
+benar: 1
+},
+{
+soal: "Bank benih bertujuan untuk...",
+pilihan: ["Menyimpan cadangan genetik", "Mengurangi populasi", "Mengganti habitat", "Mempercepat kepunahan"],
+benar: 0
+},
+{
+soal: "Ekowisata mendukung konservasi karena...",
+pilihan: ["Mengeksploitasi alam", "Memberi nilai ekonomi tanpa merusak", "Mengurangi spesies liar", "Menebang hutan"],
+benar: 1}
+]
+};
+
+let pertanyaan = semuaLevel[level];
+function tampilSoal() {
+
+if (nomor >= pertanyaan.length) {
+
+if (skor >= batasLulus) {
+level++;
+
+if (semuaLevel[level]) {
+alert("Asik Naik ke Level " + level + "!");
+pertanyaan = semuaLevel[level];
+nomor = 0;
+tampilSoal();
+return;
+} else {
+document.getElementById("card").innerHTML =
+"<h2>SELAMAT! SEMUA LEVEL SELESAI!</h2>" +
+"<p>Total Skor Kamu: " + skor + "</p>" +
+"<br>" +
+"<button onclick='location.reload()'>Main Lagi</button>" +
+"<br><br>" +
+"<button onclick=\"window.location.href='materiD.html'\">Kembali ke Materi</button>";
+return;
+}
+} else {
+document.getElementById("card").innerHTML =
+"<h2>Kamu Perlu Belajar Lagi!</h2>" +
+"<p>Skor kamu belum cukup untuk naik level.</p>" +
+"<button onclick=\"window.location.href='materiD.html'\">Ulangi Materi</button>";
+return;
+}
+}
+
+document.getElementById("level").innerText =
+"Level " + level;
+
+document.getElementById("soal").innerText =
+pertanyaan[nomor].soal;
+let tombolJawaban = "";
+
+for (let i = 0; i < pertanyaan[nomor].pilihan.length; i++) {
+tombolJawaban +=
+"<button onclick='cekJawaban(" + i + ")'>" +
+pertanyaan[nomor].pilihan[i] +
+"</button><br>";
+}
+
+document.getElementById("jawaban").innerHTML = tombolJawaban;
+localStorage.setItem("skorMisiD", skor);
+}
+
+function kembali() {
+if (confirm("Yakin ingin keluar?")) {
+window.location.href = "materiD.html";
+}
+}
+
+function cekJawaban(pilihanUser) {
+
+let card = document.getElementById("card");
+
+if (pilihanUser == pertanyaan[nomor].benar) {
+skor += 10;
+card.classList.add("benar");
+} else {
+nyawa--;
+card.classList.add("salah");
+}
+
+document.getElementById("nyawa").innerText = nyawa;
+document.getElementById("skor").innerText = skor;
+
+setTimeout(() => {
+card.classList.remove("benar");
+card.classList.remove("salah");
+
+if (nyawa == 0) {
+card.innerHTML =
+"<h2>GAME OVER!</h2>" +
+"<button onclick='location.reload()'>Coba Lagi</button>";
+return;
+}
+
+nomor++;
+tampilSoal();
+
+}, 500);
+}
+
+tampilSoal();
+
+</script>
+</body>
+</html>
