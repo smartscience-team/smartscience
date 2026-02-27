@@ -131,6 +131,7 @@ button:hover {
 
 let nyawa = 3;
 let skor = 0;
+let skorLevel = 0;
 let nomor = 0;
 let level = 1;
 let batasLulus = 20; // minimal 2 soal benar per level
@@ -191,13 +192,14 @@ function tampilSoal() {
 
 if (nomor >= pertanyaan.length) {
 
-if (skor >= batasLulus) {
+if (skorLevel >= batasLulus) {
 level++;
 
 if (semuaLevel[level]) {
 alert("Asik Naik ke Level " + level + "!");
 pertanyaan = semuaLevel[level];
 nomor = 0;
+skorLevel = 0;
 tampilSoal();
 return;
 } else {
@@ -212,8 +214,10 @@ return;
 }
 } else {
 document.getElementById("card").innerHTML =
-"<h2>Kamu Perlu Belajar Lagi!</h2>" +
-"<p>Skor kamu belum cukup untuk naik level.</p>" +
+"<h2>Rekomendasi Belajar Ulang</h2>" +
+"<p>Skor Level " + level + " kamu hanya " + skorLevel + 
+" poin.</p>" +
+"<p>Pelajari kembali materi sebelum melanjutkan ke level berikutnya.</p>" +
 "<button onclick=\"window.location.href='materiC.html'\">Ulangi Materi</button>";
 return;
 }
@@ -249,6 +253,7 @@ let card = document.getElementById("card");
 
 if (pilihanUser == pertanyaan[nomor].benar) {
 skor += 10;
+skorLevel += 10;
 card.classList.add("benar");
 } else {
 nyawa--;
